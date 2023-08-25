@@ -154,6 +154,7 @@ public class GridGenerator : MonoBehaviour
         // Check if all cards have been matched
         if (AllCardsMatched())
         {
+            GameManager.Instance.WinTextPanel.SetActive(true);
             Debug.Log("You've matched all cards! Victory!");
         }
     }

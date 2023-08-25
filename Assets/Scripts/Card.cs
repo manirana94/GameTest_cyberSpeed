@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,7 +59,8 @@ public class Card : MonoBehaviour
         Button button = GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
-            if (!this.IsMatched && !this.IsFlipped && GridGenerator.StoringOpenCards.Count != 2)
+            // if (!this.IsMatched && !this.IsFlipped && GridGenerator.StoringOpenCards.Count != 2)
+            if (!this.IsMatched && !this.IsFlipped)
             {
                 IsFlipped = true;
                 cardImage.sprite = CardSpriteFront; // Show the front image
@@ -73,6 +75,7 @@ public class Card : MonoBehaviour
     /// </summary>
     public void ShowCard()
     {
+        CardAnimation();
         this.IsFlipped = true;
         this.cardImage.enabled = true;
     }
@@ -94,4 +97,22 @@ public class Card : MonoBehaviour
     {
         this.IsMatched = true;
     }
+
+    #region CardZoom
+
+    public float zoomDuration = 2.0f;
+    public float zoomScale = 1.1f;
+    
+    public void CardAnimation()
+    {
+        
+        this.transform.localScale = Vector3.zero;
+
+        this.transform.DOScale(Vector3.one * zoomScale, zoomDuration)
+            .SetEase(Ease.OutBack);
+    }
+
+    #endregion
+
+    
 }

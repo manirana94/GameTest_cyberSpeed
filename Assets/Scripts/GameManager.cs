@@ -1,6 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +16,9 @@ public class GameManager : MonoBehaviour
     public AudioClip NotMatchSound;
     public AudioSource audioSource;
 
+
+    public GameObject WinTextPanel;
+    public GameObject TitleText;
 
     private void Awake()
     {
@@ -23,6 +31,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        TitleText.gameObject.SetActive(true);
         
     }
     
@@ -56,6 +65,12 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()// Resume the game
     {
         Time.timeScale = 1; 
+    }
+
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }

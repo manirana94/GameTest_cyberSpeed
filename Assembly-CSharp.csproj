@@ -44,8 +44,10 @@
      <Compile Include="Assets/Scripts/GridGenerator.cs" />
      <Compile Include="Assets/Scripts/Card.cs" />
      <Compile Include="Assets/Scripts/GameManager.cs" />
+     <Compile Include="Assets/Scripts/ZoomAnimation.cs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets/Fonts/Chewy/LICENSE.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
@@ -305,6 +307,9 @@
      </Reference>
      <Reference Include="Newtonsoft.Json">
      <HintPath>/Users/abdulrehmanrana/Desktop/AbdulProjects/GameTest_cyberSpeed/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTween">
+     <HintPath>/Users/abdulrehmanrana/Desktop/AbdulProjects/GameTest_cyberSpeed/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor.iOS.Extensions.Xcode">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.8f1/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -687,9 +692,6 @@
      <Reference Include="Unity.VisualScripting.Flow.Editor">
      <HintPath>/Users/abdulrehmanrana/Desktop/AbdulProjects/GameTest_cyberSpeed/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VSCode.Editor">
-     <HintPath>/Users/abdulrehmanrana/Desktop/AbdulProjects/GameTest_cyberSpeed/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.Services.Core.Analytics">
      <HintPath>/Users/abdulrehmanrana/Desktop/AbdulProjects/GameTest_cyberSpeed/Library/ScriptAssemblies/Unity.Services.Core.Analytics.dll</HintPath>
      </Reference>
@@ -749,6 +751,10 @@
      </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{de629f1c-0aa0-5b47-6486-fdaa8434f8f9}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
