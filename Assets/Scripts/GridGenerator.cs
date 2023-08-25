@@ -146,6 +146,7 @@ public class GridGenerator : MonoBehaviour
 
         foreach (Card openCard in StoringOpenCards)
         {
+            GameManager.Instance.PlayMatchedSound();
             openCard.HideCard();
         }
 
@@ -178,6 +179,7 @@ public class GridGenerator : MonoBehaviour
 
         foreach (Card openCard in StoringOpenCards)
         {
+            GameManager.Instance.PlayNotMatchedSound();
             openCard.FlipBackCard();
         }
 

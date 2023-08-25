@@ -62,6 +62,7 @@ public class Card : MonoBehaviour
             {
                 IsFlipped = true;
                 cardImage.sprite = CardSpriteFront; // Show the front image
+                GameManager.Instance.PlayButtonClickSound();
                 onClickCallback?.Invoke(this);
             }
         });

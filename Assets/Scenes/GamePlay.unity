@@ -167,10 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77477184aba64413e92ca47e1ba58389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonClickSound: {fileID: 0}
-  MatchSound: {fileID: 0}
-  NotMatchSound: {fileID: 0}
-  audioSource: {fileID: 0}
+  buttonClickSound: {fileID: 8300000, guid: 189abfc58cd194670b062847143a002e, type: 3}
+  MatchSound: {fileID: 8300000, guid: 2562063f7e3784a348089f3e79d5eed5, type: 3}
+  NotMatchSound: {fileID: 8300000, guid: be49699e83a574165aec0e99939fbaab, type: 3}
+  audioSource: {fileID: 1372066396}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
