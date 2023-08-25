@@ -13,11 +13,17 @@ public class GridGenerator : MonoBehaviour
     public int gridSizeY = 4; // Number of rows
 
     private List<int> StoringCardValues; // List to store card values
-    public static List<Card> StoringOpenCards; // List to store currently open cards
+    public List<Card> StoringOpenCards; // List to store currently open cards
 
     //Used to set GridLayoutGroup both Horizontal and Vertical constraints manually
     private Vector2 horizontalScale = new Vector2(1f, 1f); // Horizontal scaling factor (width)
     private Vector2 verticalScale = new Vector2(1f, 1f); // Vertical scaling factor (height)
+
+
+    private List<List<Card>> listoflist = new List<List<Card>>();
+
+    public static bool
+        ReadyToStart = true; //Will control that use will not be able to play during we are showing user card front side
 
     private void Start()
     {
@@ -60,6 +66,24 @@ public class GridGenerator : MonoBehaviour
                     return card;
                 }))
             .ToList(); // This ToList() call ensures that the cards are instantiated
+        StartCoroutine(DisableCardsAgain());
+    }
+
+    /// <summary>
+    /// This function used to flip card back after showing for few seconds
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator DisableCardsAgain()
+    {
+        yield return new WaitForSeconds(2f);
+
+        foreach (Transform cardsIn in cardsParent)
+        {
+            cardsIn.GetComponent<Card>().FlipBackCard();
+            cardsIn.GetComponent<Card>().CardAnimation();
+        }
+
+        ReadyToStart = false;
     }
 
     List<int> GenerateCardValues()
@@ -114,47 +138,53 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
+
 //This function will be called in the call back of card button click
     void OnCardClicked(Card card)
     {
-        if (StoringOpenCards.Count < 2)
+        card.ShowCard();
+        StoringOpenCards.Add(card);
+        if (StoringOpenCards.Count == 2)
         {
-            card.ShowCard();
-            StoringOpenCards.Add(card);
-
-            if (StoringOpenCards.Count == 2)
+            listoflist.Add(new List<Card>(StoringOpenCards));
+            StoringOpenCards.Clear();
+            foreach (List<Card> cardPair in listoflist)
             {
-                bool isMatch = StoringOpenCards[0].Value == StoringOpenCards[1].Value;
+                bool isMatch = cardPair[0].Value == cardPair[1].Value;
 
                 if (isMatch)
                 {
                     // Match found
-                    StartCoroutine(HideMatchedCards());
+                    StartCoroutine(HideMatchedCards(cardPair[0], cardPair[1]));
                 }
                 else
                 {
                     // No match
-                    StartCoroutine(FlipBackCards());
+                    StartCoroutine(FlipBackCards(cardPair[0], cardPair[1]));
                 }
             }
+
+            listoflist.RemoveAt(0);
         }
     }
 
-    private IEnumerator HideMatchedCards()
+
+    private IEnumerator HideMatchedCards(Card card1, Card card2)
     {
         yield return new WaitForSeconds(1f);
 
-        foreach (Card openCard in StoringOpenCards)
-        {
-            GameManager.Instance.PlayMatchedSound();
-            openCard.HideCard();
-        }
+        GameManager.Instance.PlayMatchedSound();
+        card1.HideCard();
+        card2.HideCard();
 
-        StoringOpenCards.Clear();
         // Check if all cards have been matched
         if (AllCardsMatched())
         {
             GameManager.Instance.WinTextPanel.SetActive(true);
+            GameManager.Instance.PlayCoinsSound();
+            GameManager.Instance.ScoreText.GetComponent<ZoomAnimation>().enabled = true;
+            GameManager.Instance.AddScore(50);
+
             Debug.Log("You've matched all cards! Victory!");
         }
     }
@@ -174,16 +204,13 @@ public class GridGenerator : MonoBehaviour
         return true;
     }
 
-    private IEnumerator FlipBackCards()
+    private IEnumerator FlipBackCards(Card card1, Card card2)
     {
         yield return new WaitForSeconds(1f);
 
-        foreach (Card openCard in StoringOpenCards)
-        {
-            GameManager.Instance.PlayNotMatchedSound();
-            openCard.FlipBackCard();
-        }
 
-        StoringOpenCards.Clear();
+        GameManager.Instance.PlayNotMatchedSound();
+        card1.FlipBackCard();
+        card2.FlipBackCard();
     }
 }

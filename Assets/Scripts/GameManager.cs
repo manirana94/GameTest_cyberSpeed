@@ -14,11 +14,14 @@ public class GameManager : MonoBehaviour
     public AudioClip buttonClickSound;
     public AudioClip MatchSound;
     public AudioClip NotMatchSound;
+    public AudioClip CoinsSound;
     public AudioSource audioSource;
 
 
     public GameObject WinTextPanel;
     public GameObject TitleText;
+    public TextMeshProUGUI ScoreText;
+    
 
     private void Awake()
     {
@@ -32,7 +35,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         TitleText.gameObject.SetActive(true);
-        
+        ScoreText.text ="Score: "+ PlayerPrefs.GetInt("Score",0).ToString();
+
     }
     
     public void PlayButtonClickSound()
@@ -44,16 +48,24 @@ public class GameManager : MonoBehaviour
     }
     public void PlayMatchedSound()
     {
-        if (buttonClickSound != null && audioSource != null)
+        if (MatchSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(MatchSound);
         }
     }
     public void PlayNotMatchedSound()
     {
-        if (buttonClickSound != null && audioSource != null)
+        if (NotMatchSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(NotMatchSound);
+        }
+    }
+    
+    public void PlayCoinsSound()
+    {
+        if (CoinsSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(CoinsSound);
         }
     }
 
@@ -71,6 +83,14 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void AddScore(int value)
+    {
+       int score = PlayerPrefs.GetInt("Score",0);
+       score += value;
+       PlayerPrefs.SetInt("Score" ,score);
+       ScoreText.text ="Score: "+ score.ToString();
     }
 
 }

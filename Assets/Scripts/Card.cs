@@ -49,7 +49,8 @@ public class Card : MonoBehaviour
         if (CardSpriteFront != null)
         {
             // Setting card image to as blank image in start
-            cardImage.sprite = blankSprite != null ? blankSprite : CardSpriteFront;
+            // cardImage.sprite = blankSprite != null ? blankSprite : CardSpriteFront;
+            cardImage.sprite =  CardSpriteFront;
         }
         else
         {
@@ -59,8 +60,7 @@ public class Card : MonoBehaviour
         Button button = GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
-            // if (!this.IsMatched && !this.IsFlipped && GridGenerator.StoringOpenCards.Count != 2)
-            if (!this.IsMatched && !this.IsFlipped)
+            if (!this.IsMatched && !this.IsFlipped && !GridGenerator.ReadyToStart)
             {
                 IsFlipped = true;
                 cardImage.sprite = CardSpriteFront; // Show the front image
@@ -68,6 +68,8 @@ public class Card : MonoBehaviour
                 onClickCallback?.Invoke(this);
             }
         });
+        
+        
     }
 
     /// <summary>
